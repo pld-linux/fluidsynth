@@ -14,6 +14,7 @@ Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	ladspa-devel
 Requires:	alsa-lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
