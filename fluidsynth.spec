@@ -1,9 +1,9 @@
 #
 # Conditional build:
-# _with_sse	-Use the SSE instructions of Pentium3+
+# _with_sse	- use the SSE instructions of Pentium3+ or Athlon XP
 #
 Summary:	FluidSynth is a software, real-time synthesizer
-Summary(pl):	FluidSynth to programowy , czasu rzeczywistego syntezator
+Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.1
 Release:	1
@@ -22,8 +22,8 @@ Fluid Synth is a software, real-time synthesizer based on the
 Soundfont 2 specifications.
 
 %description -l pl
-Fluid Synth to programowy, czasu rzeczywistego syntezator bazuj±cy na
-specyfikacji Soundfont 2
+Fluid Synth to programowy, dzia³aj±cy w czasie rzeczywistym syntezator
+oparty na specyfikacji Soundfont 2.
 
 %package devel
 Summary:	Development files for the FluidSynth
@@ -33,24 +33,23 @@ Requires:       %{name} = %{version}
 
 %description devel
 This package contains the header files necessary to develop
-applications using FluidSynth - header files.
+applications using FluidSynth.
 
 %description devel -l pl
 Pakiet tem zawiera pliki nag³ówkowe potrzebne do tworzenia i
 kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth.
 
-
 %package static
-Summary:        Static libraries for the FluidSynth
-Summary(pl):    Statyczne wersje bibliotek z FluidSynth
+Summary:        Static FluidSynth library
+Summary(pl):    Statyczna wersje biblioteki FluidSynth
 Group:          Development/Libraries
 Requires:       %{name}-devel = %{version}
 
 %description static
-This package contains static libraries for the FluidSynth library.
+This package contains static version of the FluidSynth library.
 
 %description static -l pl
-Ten pakiet zawiera biblioteki statyczne dla FluidSynth
+Ten pakiet zawiera bibliotekê statyczn± FluidSynth.
 
 %prep
 %setup -q
@@ -74,21 +73,24 @@ install -d $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README
 %{_mandir}/man1/*
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/lib%{name}.so.1*
+%attr(755,root,root) %{_libdir}/lib%{name}.so.*.*.*
 
 %files devel
-%attr(755,root,root) %{_libdir}/lib%{name}.la
-%{_libdir}/lib%{name}.a
-%{_libdir}/pkgconfig/fluidsynth.pc
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/lib%{name}.so
+%attr(755,root,root) %{_libdir}/lib%{name}.la
 %{_includedir}/%{name}.h
-%dir %{_includedir}/%{name}
-%{_includedir}/%{name}/*.h
+%{_includedir}/%{name}
+%{_libdir}/pkgconfig/fluidsynth.pc
 
 %files static
+%defattr(644,root,root,755)
 %{_libdir}/lib%{name}.a
