@@ -3,6 +3,10 @@
 %bcond_with	ladcca	# enable ladcca sesion managment support
 %bcond_with	sse	# use the SSE instructions of Pentium3+ or Athlon XP
 #
+%ifarch pentium3 pentium4 athlon amd64
+%define		with_sse	1
+%endif
+#
 Summary:	FluidSynth is a software, real-time synthesizer
 Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
@@ -68,7 +72,8 @@ cp /usr/share/automake/config.sub .
 	--enable-coreaudio \
 	--enable-jack-support \
 	--enable-ladspa \
-	--enable-midishare
+	--enable-midishare \
+	--enable-profiling
 	
 %{__make}
 
