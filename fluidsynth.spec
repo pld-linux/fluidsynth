@@ -11,7 +11,7 @@ Summary:	FluidSynth is a software, real-time synthesizer
 Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.3
-Release:	3
+Release:	4
 License:	LGPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}-%{version}.tar.gz
@@ -23,6 +23,8 @@ BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
 BuildRequires:	ladspa-devel
 Requires:	alsa-lib
+# supports also Mac OS X Darwin, so probably it is easy to extend
+ExclusiveArch:	%{ix86} amd64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
