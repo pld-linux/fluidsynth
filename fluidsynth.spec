@@ -59,6 +59,9 @@ Ten pakiet zawiera bibliotekê statyczn± FluidSynth.
 %setup -q
 
 %build
+
+cp /usr/share/automake/config.sub .
+
 %configure \
 	%{!?with_ladcca:--disable-ladcca} \
 	%{?with_sse:--enable-SSE} \
