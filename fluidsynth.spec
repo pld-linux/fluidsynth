@@ -1,3 +1,7 @@
+#
+# Conditional build:
+# _with_sse	-Use the SSE instructions of Pentium3+
+#
 Summary:	FluidSynth is a software, real-time synthesizer
 Summary(pl):	FluidSynth to programowy , czasu rzeczywistego syntezator
 Name:		fluidsynth
@@ -24,6 +28,7 @@ specyfikacji Soundfont 2
 Summary:	Development files for the FluidSynth
 Summary(pl):	Pliki nag³ówkowe dla FluidSynth
 Group:		Development/Libraries
+Requires:       %{name} = %{version}
 
 %description devel
 This package contains the header files necessary to develop
@@ -31,8 +36,20 @@ applications using FluidSynth - header files.
 
 %description devel -l pl
 Pakiet tem zawiera pliki nag³ówkowe potrzebne do tworzenia i
-kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth
+kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth.
 
+
+%package static
+Summary:        Static libraries for the FluidSynth
+Summary(pl):    Statyczne wersje bibliotek z FluidSynth
+Group:          Development/Libraries
+Requires:       %{name}-devel = %{version}
+
+%description static
+This package contains static libraries for the FluidSynth library.
+
+%description static -l pl
+Ten pakiet zawiera biblioteki statyczne dla FluidSynth
 
 %prep
 %setup -q
@@ -42,7 +59,8 @@ kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth
 	--enable-ladspa \
 	--enable-midishare \
 	--enable-jack-support \
-	--enable-coreaudio
+	--enable-coreaudio \
+	%{?_with_sse:--enable-SSE}
 %{__make}
 
 %install
@@ -59,13 +77,16 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README
 %{_mandir}/man1/*
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/lib%{name}.so*
+%attr(755,root,root) %{_libdir}/lib%{name}.so.1*
+
+%files devel
 %attr(755,root,root) %{_libdir}/lib%{name}.la
 %{_libdir}/lib%{name}.a
 %{_libdir}/pkgconfig/fluidsynth.pc
-
-%files devel
 %defattr(644,root,root,755)
 %{_includedir}/%{name}.h
 %dir %{_includedir}/%{name}
 %{_includedir}/%{name}/*.h
+
+%files static
+%{_libdir}/lib%{name}.a
