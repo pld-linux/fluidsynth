@@ -3,7 +3,7 @@
 %bcond_with	ladcca	# enable ladcca sesion managment support
 %bcond_with	sse	# use the SSE instructions of Pentium3+ or Athlon XP
 #
-%ifarch pentium3 pentium4 athlon amd64
+%ifarch pentium3 pentium4 amd64
 %define		with_sse	1
 %endif
 #
