@@ -40,7 +40,7 @@ This package contains the header files necessary to develop
 applications using FluidSynth.
 
 %description devel -l pl
-Pakiet tem zawiera pliki nag³ówkowe potrzebne do tworzenia i
+Pakiet ten zawiera pliki nag³ówkowe potrzebne do tworzenia i
 kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth.
 
 %package static
