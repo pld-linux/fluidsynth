@@ -7,7 +7,7 @@ Summary:	FluidSynth is a software, real-time synthesizer
 Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.3
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}-%{version}.tar.gz
@@ -33,7 +33,7 @@ oparty na specyfikacji Soundfont 2.
 Summary:	Development files for the FluidSynth
 Summary(pl):	Pliki nag³ówkowe dla FluidSynth
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files necessary to develop
@@ -47,7 +47,7 @@ kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth.
 Summary:	Static FluidSynth library
 Summary(pl):	Statyczna wersje biblioteki FluidSynth
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 This package contains static version of the FluidSynth library.
