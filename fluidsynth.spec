@@ -1,14 +1,14 @@
 #
 # Conditional build:
-%bcond_with ladcca	# enable ladcca sesion managment support
-%bcond_with sse		# use the SSE instructions of Pentium3+ or Athlon XP
+%bcond_with	ladcca	# enable ladcca sesion managment support
+%bcond_with	sse	# use the SSE instructions of Pentium3+ or Athlon XP
 #
 Summary:	FluidSynth is a software, real-time synthesizer
 Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.3
 Release:	3
-License:	GPL
+License:	LGPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	fbdccd05e538626888e27b58d3bdbc2b
