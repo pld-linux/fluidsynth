@@ -18,10 +18,12 @@ Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}
 # Source0-md5:	fbdccd05e538626888e27b58d3bdbc2b
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
+BuildRequires:	automake
 BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
 BuildRequires:	ladspa-devel
+BuildRequires:	pkgconfig
 Requires:	alsa-lib
 # supports also Mac OS X Darwin, so probably it is easy to extend
 ExclusiveArch:	%{ix86} amd64
