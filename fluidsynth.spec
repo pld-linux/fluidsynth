@@ -1,16 +1,16 @@
 #
 # Conditional build:
-# _with_sse	- use the SSE instructions of Pentium3+ or Athlon XP
+%bcond_with  sse	# use the SSE instructions of Pentium3+ or Athlon XP
 #
 Summary:	FluidSynth is a software, real-time synthesizer
 Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
-Version:	1.0.2
+Version:	1.0.3
 Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	9765e1601ba0fc546f5bf2e0d966784b
+# Source0-md5:	fbdccd05e538626888e27b58d3bdbc2b
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	jack-audio-connection-kit-devel
@@ -56,11 +56,12 @@ Ten pakiet zawiera bibliotekê statyczn± FluidSynth.
 
 %build
 %configure \
-	--enable-ladspa \
-	--enable-midishare \
-	--enable-jack-support \
+	%{?with_sse:--enable-SSE} \
 	--enable-coreaudio \
-	%{?_with_sse:--enable-SSE}
+	--enable-jack-support \
+	--enable-ladspa \
+	--enable-midishare
+	
 %{__make}
 
 %install
