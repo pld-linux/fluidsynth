@@ -10,6 +10,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	7a0ab811d68afcd1d5a40e04a25eaad7
 Source1:	%{name}-fluid_sse.h
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
