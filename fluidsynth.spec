@@ -29,7 +29,7 @@ oparty na specyfikacji Soundfont 2.
 Summary:	Development files for the FluidSynth
 Summary(pl):	Pliki nag³ówkowe dla FluidSynth
 Group:		Development/Libraries
-Requires:       %{name} = %{version}
+Requires:	%{name} = %{version}
 
 %description devel
 This package contains the header files necessary to develop
@@ -40,10 +40,10 @@ Pakiet tem zawiera pliki nag³ówkowe potrzebne do tworzenia i
 kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth.
 
 %package static
-Summary:        Static FluidSynth library
-Summary(pl):    Statyczna wersje biblioteki FluidSynth
-Group:          Development/Libraries
-Requires:       %{name}-devel = %{version}
+Summary:	Static FluidSynth library
+Summary(pl):	Statyczna wersje biblioteki FluidSynth
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
 
 %description static
 This package contains static version of the FluidSynth library.
