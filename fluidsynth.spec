@@ -10,6 +10,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/stable.pkg/%{version}/%{name}-%{version}.tar.gz
+Source1:	%{name}-fluid_sse.h
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	jack-audio-connection-kit-devel
@@ -53,6 +54,7 @@ Ten pakiet zawiera biblioteki statyczne dla FluidSynth
 
 %prep
 %setup -q
+cp %{SOURCE1} src/fluid_sse.h
 
 %build
 %configure \
