@@ -3,7 +3,7 @@
 %bcond_with	ladcca	# enable ladcca sesion managment support
 %bcond_with	sse	# use the SSE instructions of Pentium3+ or Athlon XP
 #
-%ifarch pentium3 pentium4 amd64
+%ifarch pentium3 pentium4 %{x8664}
 %define		with_sse	1
 %endif
 #
@@ -24,9 +24,10 @@ BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
 BuildRequires:	ladspa-devel
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.213
 Requires:	alsa-lib
 # supports also Mac OS X Darwin, so probably it is easy to extend
-ExclusiveArch:	%{ix86} amd64
+ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
