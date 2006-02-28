@@ -20,8 +20,8 @@ URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	automake
 BuildRequires:	jack-audio-connection-kit-devel
-%{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
+%{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 BuildRequires:	ladspa-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
@@ -79,7 +79,7 @@ cp /usr/share/automake/config.sub .
 	--enable-ladspa \
 	--enable-midishare \
 	--enable-profiling
-	
+
 %{__make}
 
 %install
@@ -108,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib%{name}.la
 %{_includedir}/%{name}.h
 %{_includedir}/%{name}
-%{_libdir}/pkgconfig/fluidsynth.pc
+%{_pkgconfigdir}/fluidsynth.pc
 
 %files static
 %defattr(644,root,root,755)
