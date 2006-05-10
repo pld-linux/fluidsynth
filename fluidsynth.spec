@@ -105,7 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib%{name}.so
-%attr(755,root,root) %{_libdir}/lib%{name}.la
+%{_libdir}/lib%{name}.la
 %{_includedir}/%{name}.h
 %{_includedir}/%{name}
 %{_pkgconfigdir}/fluidsynth.pc
