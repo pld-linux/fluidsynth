@@ -9,8 +9,8 @@
 #
 %define		rversion 1.0.7
 #
-Summary:	FluidSynth is a software, real-time synthesizer
-Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
+Summary:	FluidSynth - a software, real-time synthesizer
+Summary(pl):	FluidSynth - programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.7a
 Release:	1
