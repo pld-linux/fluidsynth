@@ -28,8 +28,6 @@ BuildRequires:	ladspa-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 Requires:	alsa-lib
-# supports also Mac OS X Darwin, so probably it is easy to extend
-ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
