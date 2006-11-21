@@ -68,7 +68,6 @@ Ten pakiet zawiera bibliotekê statyczn± FluidSynth.
 %setup -qn %{name}-%{rversion}
 
 %build
-
 cp /usr/share/automake/config.sub .
 
 %configure \
@@ -98,9 +97,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README
-%{_mandir}/man1/*
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib%{name}.so.*.*.*
+%{_mandir}/man1/*
 
 %files devel
 %defattr(644,root,root,755)
