@@ -11,7 +11,7 @@ Summary:	FluidSynth is a software, real-time synthesizer
 Summary(pl):	FluidSynth to programowy syntezator dzia³aj±cy w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.6
-Release:	2
+Release:	3
 License:	LGPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/%{name}-%{version}.tar.gz
@@ -26,8 +26,6 @@ BuildRequires:	ladspa-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 Requires:	alsa-lib
-# supports also Mac OS X Darwin, so probably it is easy to extend
-ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -68,7 +66,6 @@ Ten pakiet zawiera bibliotekê statyczn± FluidSynth.
 %setup -q
 
 %build
-
 cp /usr/share/automake/config.sub .
 
 %configure \
@@ -98,17 +95,17 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README
-%{_mandir}/man1/*
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/lib%{name}.so.*.*.*
+%{_mandir}/man1/*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib%{name}.so
-%attr(755,root,root) %{_libdir}/lib%{name}.la
+%{_libdir}/lib%{name}.la
 %{_includedir}/%{name}.h
 %{_includedir}/%{name}
-%{_libdir}/pkgconfig/fluidsynth.pc
+%{_pkgconfigdir}/fluidsynth.pc
 
 %files static
 %defattr(644,root,root,755)
