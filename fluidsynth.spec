@@ -10,7 +10,7 @@
 %define		rversion 1.0.7
 #
 Summary:	FluidSynth - a software, real-time synthesizer
-Summary(pl):	FluidSynth - programowy syntezator dzia³aj±cy w czasie rzeczywistym
+Summary(pl.UTF-8):   FluidSynth - programowy syntezator dziaÅ‚ajÄ…cy w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.7a
 Release:	2
@@ -34,13 +34,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Fluid Synth is a software, real-time synthesizer based on the
 Soundfont 2 specifications.
 
-%description -l pl
-Fluid Synth to programowy, dzia³aj±cy w czasie rzeczywistym syntezator
+%description -l pl.UTF-8
+Fluid Synth to programowy, dziaÅ‚ajÄ…cy w czasie rzeczywistym syntezator
 oparty na specyfikacji Soundfont 2.
 
 %package devel
 Summary:	Development files for the FluidSynth
-Summary(pl):	Pliki nag³ówkowe dla FluidSynth
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe dla FluidSynth
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -48,21 +48,21 @@ Requires:	%{name} = %{version}-%{release}
 This package contains the header files necessary to develop
 applications using FluidSynth.
 
-%description devel -l pl
-Pakiet ten zawiera pliki nag³ówkowe potrzebne do tworzenia i
-kompilacji aplikacji korzystaj±cych z bibliotek FluidSynth.
+%description devel -l pl.UTF-8
+Pakiet ten zawiera pliki nagÅ‚Ã³wkowe potrzebne do tworzenia i
+kompilacji aplikacji korzystajÄ…cych z bibliotek FluidSynth.
 
 %package static
 Summary:	Static FluidSynth library
-Summary(pl):	Statyczna wersje biblioteki FluidSynth
+Summary(pl.UTF-8):   Statyczna wersje biblioteki FluidSynth
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 This package contains static version of the FluidSynth library.
 
-%description static -l pl
-Ten pakiet zawiera bibliotekê statyczn± FluidSynth.
+%description static -l pl.UTF-8
+Ten pakiet zawiera bibliotekÄ™ statycznÄ… FluidSynth.
 
 %prep
 %setup -qn %{name}-%{rversion}
