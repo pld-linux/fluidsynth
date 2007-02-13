@@ -10,7 +10,7 @@
 %define		rversion 1.0.7
 #
 Summary:	FluidSynth - a software, real-time synthesizer
-Summary(pl.UTF-8):   FluidSynth - programowy syntezator działający w czasie rzeczywistym
+Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.7a
 Release:	2
@@ -40,7 +40,7 @@ oparty na specyfikacji Soundfont 2.
 
 %package devel
 Summary:	Development files for the FluidSynth
-Summary(pl.UTF-8):   Pliki nagłówkowe dla FluidSynth
+Summary(pl.UTF-8):	Pliki nagłówkowe dla FluidSynth
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -54,7 +54,7 @@ kompilacji aplikacji korzystających z bibliotek FluidSynth.
 
 %package static
 Summary:	Static FluidSynth library
-Summary(pl.UTF-8):   Statyczna wersje biblioteki FluidSynth
+Summary(pl.UTF-8):	Statyczna wersje biblioteki FluidSynth
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
