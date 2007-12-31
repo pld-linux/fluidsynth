@@ -7,17 +7,15 @@
 %define		with_sse	1
 %endif
 #
-%define		rversion 1.0.7
-#
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	1.0.7a
-Release:	2
+Version:	1.0.8
+Release:	1
 License:	LGPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/%{name}-%{version}.tar.gz
-# Source0-md5:	0f73d47990d859f19b8e9840bdab5c60
+# Source0-md5:	e2abfd2e69fd8b28d965df968d7d44ee
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	automake
@@ -65,7 +63,7 @@ This package contains static version of the FluidSynth library.
 Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 
 %prep
-%setup -qn %{name}-%{rversion}
+%setup -q
 
 %build
 cp /usr/share/automake/config.sub .
