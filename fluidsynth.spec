@@ -1,7 +1,8 @@
 #
 # Conditional build:
-%bcond_with	ladcca	# enable ladcca sesion managment support
-%bcond_with	sse	# use the SSE instructions of Pentium3+ or Athlon XP
+%bcond_with	ladcca		# enable ladcca sesion managment support
+%bcond_with	sse		# use the SSE instructions of Pentium3+ or Athlon XP
+%bcond_without	static_libs	# don't build static library
 #
 %ifarch pentium3 pentium4 %{x8664}
 %define		with_sse	1
@@ -16,13 +17,16 @@ License:	LGPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/%{name}-%{version}.tar.gz
 # Source0-md5:	e2abfd2e69fd8b28d965df968d7d44ee
+Patch0:		%{name}-build.patch
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
+BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
 %{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 BuildRequires:	ladspa-devel
+BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 Requires:	alsa-lib
@@ -64,18 +68,24 @@ Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-cp /usr/share/automake/config.sub .
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 
 %configure \
 	%{!?with_ladcca:--disable-ladcca} \
+	%{!?with_static_libs:--disable-static} \
 	%{?with_sse:--enable-SSE} \
 	--enable-coreaudio \
 	--enable-jack-support \
 	--enable-ladspa \
-	--enable-midishare \
-	--enable-profiling
+	--enable-profiling \
+	--without-readline
 
 %{__make}
 
@@ -95,18 +105,21 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog README
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/lib%{name}.so.*.*.*
-%{_mandir}/man1/*
+%attr(755,root,root) %{_bindir}/fluidsynth
+%attr(755,root,root) %{_libdir}/libfluidsynth.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.1
+%{_mandir}/man1/fluidsynth.1*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib%{name}.so
-%{_libdir}/lib%{name}.la
-%{_includedir}/%{name}.h
+%attr(755,root,root) %{_libdir}/libfluidsynth.so
+%{_libdir}/libfluidsynth.la
+%{_includedir}/fluidsynth.h
 %{_includedir}/%{name}
 %{_pkgconfigdir}/fluidsynth.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib%{name}.a
+%{_libdir}/libfluidsynth.a
+%endif
