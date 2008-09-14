@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_with	ladcca		# enable ladcca sesion managment support
+%bcond_with	readline	# build with readline lib line editing
 %bcond_with	sse		# use the SSE instructions of Pentium3+ or Athlon XP
 %bcond_without	static_libs	# don't build static library
 #
@@ -12,7 +13,7 @@ Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.0.8
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/%{name}-%{version}.tar.gz
@@ -28,6 +29,7 @@ BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	ladspa-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+%{?with_readline:BuildRequires:	readline-devel}
 BuildRequires:	rpmbuild(macros) >= 1.213
 Requires:	alsa-lib
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -45,6 +47,7 @@ Summary:	Development files for the FluidSynth
 Summary(pl.UTF-8):	Pliki nagłówkowe dla FluidSynth
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%{?with_readline:Requires:	readline-devel}
 
 %description devel
 This package contains the header files necessary to develop
@@ -85,7 +88,7 @@ Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 	--enable-jack-support \
 	--enable-ladspa \
 	--enable-profiling \
-	--without-readline
+	%{!?with_readline:--without-readline}
 
 %{__make}
 
