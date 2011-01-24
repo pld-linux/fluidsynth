@@ -22,6 +22,8 @@ URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
+BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel
 BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
 %{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
