@@ -28,8 +28,12 @@ BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
 %{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 BuildRequires:	ladspa-devel
+BuildRequires:	lash-devel
+BuildRequires:	libsndfile-devel >= 1.0.18
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	portaudio-devel >= 19
+BuildRequires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:BuildRequires:	readline-devel}
 BuildRequires:	rpmbuild(macros) >= 1.213
 Requires:	alsa-lib
@@ -49,6 +53,12 @@ Summary:	Development files for the FluidSynth
 Summary(pl.UTF-8):	Pliki nagłówkowe dla FluidSynth
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	alsa-lib-devel >= 0.9.0
+Requires:	jack-audio-connection-kit-devel
+Requires:	lash-devel
+Requires:	libsndfile-devel >= 1.0.18
+Requires:	portaudio-devel >= 19
+Requires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:Requires:	readline-devel}
 
 %description devel
