@@ -13,7 +13,7 @@ Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.1.1
-Release:	2
+Release:	3
 License:	LGPL
 Group:		Applications/Sound
 Source0:	http://savannah.nongnu.org/download/fluid/%{name}-%{version}.tar.gz
@@ -110,6 +110,8 @@ install -d $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libfluidsynth.la
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -127,7 +129,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libfluidsynth.so
-%{_libdir}/libfluidsynth.la
 %{_includedir}/fluidsynth.h
 %{_includedir}/%{name}
 %{_pkgconfigdir}/fluidsynth.pc
