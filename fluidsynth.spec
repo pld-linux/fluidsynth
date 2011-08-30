@@ -12,12 +12,12 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	1.1.3
+Version:	1.1.4
 Release:	1
 License:	LGPL
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/fluidsynth/%{name}-%{version}.tar.bz2
-# Source0-md5:	6e35225b088eae0c2af0b78097941655
+# Source0-md5:	b5fd2f8df79f31b68f06770dccb67956
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.0
 BuildRequires:	autoconf >= 2.52
@@ -123,7 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc ChangeLog README
 %attr(755,root,root) %{_bindir}/fluidsynth
 %attr(755,root,root) %{_libdir}/libfluidsynth.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.1
+%attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.0
 %{_mandir}/man1/fluidsynth.1*
 
 %files devel
