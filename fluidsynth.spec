@@ -1,7 +1,9 @@
 #
 # Conditional build:
-%bcond_with	ladcca		# enable ladcca sesion management support (deprecated)
-%bcond_without	readline	# build with readline lib line editing
+%bcond_with	ladcca		# ladcca sesion management support (deprecated) (GPL)
+%bcond_without	lash		# LASH support (GPL)
+%bcond_with	midishare	# MidiShare support
+%bcond_without	readline	# readline line editing (GPL)
 %bcond_with	sse		# use the SSE instructions of Pentium3+ or Athlon XP
 %bcond_without	static_libs	# don't build static library
 #
@@ -14,10 +16,15 @@ Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzec
 Name:		fluidsynth
 Version:	1.1.5
 Release:	1
+%if %{with ladcca} || %{with lash} || %{with readline}
+License:	GPL v2+ (enforced by ladcca/lash/readline), LGPL v2+ (fluidsynth itself)
+%else
 License:	LGPL v2+
+%endif
 Group:		Applications/Sound
 Source0:	http://downloads.sourceforge.net/fluidsynth/%{name}-%{version}.tar.bz2
 # Source0-md5:	835b98b0ddedbb9cc24b53d66cf900c3
+Patch0:		%{name}-midishare.patch
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.1
 BuildRequires:	autoconf >= 2.52
@@ -29,9 +36,10 @@ BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
 %{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 BuildRequires:	ladspa-devel
-BuildRequires:	lash-devel >= 0.3
+%{?with_lash:BuildRequires:	lash-devel >= 0.3}
 BuildRequires:	libsndfile-devel >= 1.0.18
 BuildRequires:	libtool
+%{?with_midishare:BuildRequires:	midishare-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	portaudio-devel >= 19
 BuildRequires:	pulseaudio-devel >= 0.9.8
@@ -60,8 +68,9 @@ Requires:	alsa-lib-devel >= 0.9.1
 Requires:	dbus-devel >= 1.0.0
 Requires:	glib2-devel >= 1:2.6.5
 Requires:	jack-audio-connection-kit-devel
-Requires:	lash-devel >= 0.3
+%{?with_lash:Requires:	lash-devel >= 0.3}
 Requires:	libsndfile-devel >= 1.0.18
+%{?with_midishare:Requires:	midishare-devel}
 Requires:	portaudio-devel >= 19
 Requires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:Requires:	readline-devel}
@@ -88,6 +97,7 @@ Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -98,6 +108,8 @@ Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 
 %configure \
 	%{!?with_ladcca:--disable-ladcca} \
+	%{!?with_lash:--disable-lash} \
+	%{!?with_midishare:--disable-midishare} \
 	%{!?with_static_libs:--disable-static} \
 	%{?with_sse:--enable-SSE} \
 	--enable-jack-support \
@@ -109,7 +121,6 @@ Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
