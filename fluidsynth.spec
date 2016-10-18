@@ -15,7 +15,7 @@ Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
 Version:	1.1.6
-Release:	1
+Release:	2
 %if %{with ladcca} || %{with lash} || %{with readline}
 License:	GPL v2+ (enforced by ladcca/lash/readline), LGPL v2+ (fluidsynth itself)
 %else
