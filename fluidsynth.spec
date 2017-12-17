@@ -14,17 +14,19 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	1.1.6
-Release:	2
+Version:	1.1.8
+Release:	1
 %if %{with ladcca} || %{with lash} || %{with readline}
 License:	GPL v2+ (enforced by ladcca/lash/readline), LGPL v2+ (fluidsynth itself)
 %else
 License:	LGPL v2+
 %endif
 Group:		Applications/Sound
-Source0:	http://downloads.sourceforge.net/fluidsynth/%{name}-%{version}.tar.bz2
-# Source0-md5:	f6e696690e989098f70641364fdffad7
+#Source0Download: https://github.com/FluidSynth/fluidsynth/releases
+Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	623bb3b8d3a3ef3c4dc0d4cdbfc311a5
 Patch0:		%{name}-midishare.patch
+Patch1:		%{name}-soname.patch
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.1
 BuildRequires:	autoconf >= 2.52
@@ -98,6 +100,7 @@ Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -117,6 +120,9 @@ Ten pakiet zawiera bibliotekę statyczną FluidSynth.
 	--enable-profiling \
 	%{!?with_readline:--without-readline}
 
+# define missing in autotools suite
+echo '#define DEFAULT_SOUNDFONT "%{_datadir}/soundfonts/default.sf2"' >> src/config.h
+
 %{__make}
 
 %install
@@ -135,7 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog README
+%doc AUTHORS NEWS README.md THANKS TODO
 %attr(755,root,root) %{_bindir}/fluidsynth
 %attr(755,root,root) %{_libdir}/libfluidsynth.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.1
