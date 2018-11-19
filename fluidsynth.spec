@@ -1,20 +1,14 @@
 #
 # Conditional build:
-%bcond_with	ladcca		# ladcca sesion management support (deprecated) (GPL)
 %bcond_without	lash		# LASH support (GPL)
 %bcond_with	midishare	# MidiShare support
+%bcond_without	portaudio	# portaudio support
 %bcond_without	readline	# readline line editing (GPL)
-%bcond_with	sse		# use the SSE instructions of Pentium3+ or Athlon XP
-%bcond_without	static_libs	# don't build static library
-#
-%ifarch pentium3 pentium4 %{x8664}
-%define		with_sse	1
-%endif
 #
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	1.1.8
+Version:	2.0.2
 Release:	1
 %if %{with ladcca} || %{with lash} || %{with readline}
 License:	GPL v2+ (enforced by ladcca/lash/readline), LGPL v2+ (fluidsynth itself)
@@ -24,13 +18,10 @@ License:	LGPL v2+
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	623bb3b8d3a3ef3c4dc0d4cdbfc311a5
-Patch0:		%{name}-midishare.patch
-Patch1:		%{name}-soname.patch
+# Source0-md5:	fdc3c131786d5a93136f6fbfde787bf1
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.1
-BuildRequires:	autoconf >= 2.52
-BuildRequires:	automake
+BuildRequires:	cmake >= 3.1.0
 BuildRequires:	dbus-devel >= 1.0.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.6.5
@@ -39,11 +30,11 @@ BuildRequires:	jack-audio-connection-kit-devel
 %{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 BuildRequires:	ladspa-devel
 %{?with_lash:BuildRequires:	lash-devel >= 0.3}
+BuildRequires:	libgomp-devel
 BuildRequires:	libsndfile-devel >= 1.0.18
-BuildRequires:	libtool
 %{?with_midishare:BuildRequires:	midishare-devel}
 BuildRequires:	pkgconfig
-BuildRequires:	portaudio-devel >= 19
+%{?with_portaudio:BuildRequires:	portaudio-devel >= 19}
 BuildRequires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:BuildRequires:	readline-devel}
 BuildRequires:	rpmbuild(macros) >= 1.213
@@ -72,10 +63,10 @@ Requires:	glib2-devel >= 1:2.6.5
 Requires:	jack-audio-connection-kit-devel
 %{?with_lash:Requires:	lash-devel >= 0.3}
 Requires:	libsndfile-devel >= 1.0.18
-%{?with_midishare:Requires:	midishare-devel}
+%{?with_midishare:Requires: midishare-devel}
 Requires:	portaudio-devel >= 19
 Requires:	pulseaudio-devel >= 0.9.8
-%{?with_readline:Requires:	readline-devel}
+%{?with_readline:Requires: readline-devel}
 
 %description devel
 This package contains the header files necessary to develop
@@ -85,40 +76,18 @@ applications using FluidSynth.
 Pakiet ten zawiera pliki nagłówkowe potrzebne do tworzenia i
 kompilacji aplikacji korzystających z bibliotek FluidSynth.
 
-%package static
-Summary:	Static FluidSynth library
-Summary(pl.UTF-8):	Statyczna wersje biblioteki FluidSynth
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-This package contains static version of the FluidSynth library.
-
-%description static -l pl.UTF-8
-Ten pakiet zawiera bibliotekę statyczną FluidSynth.
-
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-
-%configure \
-	%{!?with_ladcca:--disable-ladcca} \
-	%{!?with_lash:--disable-lash} \
-	%{!?with_midishare:--disable-midishare} \
-	%{!?with_static_libs:--disable-static} \
-	%{?with_sse:--enable-SSE} \
-	--enable-jack-support \
-	--enable-ladspa \
-	--enable-profiling \
-	%{!?with_readline:--without-readline}
+mkdir -p build
+cd build
+%cmake \
+	-Denable-midishare=%{with midishare} \
+	-Denable-lash=%{with lash} \
+	-Denable-portaudio=%{with portaudio} \
+	-Denable-readline=%{with readline} \
+	..
 
 # define missing in autotools suite
 echo '#define DEFAULT_SOUNDFONT "%{_datadir}/soundfonts/default.sf2"' >> src/config.h
@@ -128,10 +97,9 @@ echo '#define DEFAULT_SOUNDFONT "%{_datadir}/soundfonts/default.sf2"' >> src/con
 %install
 rm -rf $RPM_BUILD_ROOT
 
+cd build
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libfluidsynth.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -144,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS NEWS README.md THANKS TODO
 %attr(755,root,root) %{_bindir}/fluidsynth
 %attr(755,root,root) %{_libdir}/libfluidsynth.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.1
+%attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.2
 %{_mandir}/man1/fluidsynth.1*
 
 %files devel
@@ -153,9 +121,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/fluidsynth.h
 %{_includedir}/%{name}
 %{_pkgconfigdir}/fluidsynth.pc
-
-%if %{with static_libs}
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libfluidsynth.a
-%endif
