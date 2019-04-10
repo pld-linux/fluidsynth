@@ -8,17 +8,17 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	2.0.2
+Version:	2.0.4
 Release:	1
-%if %{with ladcca} || %{with lash} || %{with readline}
-License:	GPL v2+ (enforced by ladcca/lash/readline), LGPL v2+ (fluidsynth itself)
+%if %{with lash} || %{with readline}
+License:	GPL v2+ (enforced by lash/readline), LGPL v2+ (fluidsynth itself)
 %else
 License:	LGPL v2+
 %endif
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	fdc3c131786d5a93136f6fbfde787bf1
+# Source0-md5:	cd8e9b69f3cd250f76de78b1698ad1d2
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.1
 BuildRequires:	cmake >= 3.1.0
@@ -26,11 +26,10 @@ BuildRequires:	dbus-devel >= 1.0.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.6.5
 BuildRequires:	jack-audio-connection-kit-devel
-%{?with_ladcca:BuildRequires:	ladcca-devel < 0.4.0}
-%{?with_ladcca:BuildRequires:	ladcca-devel >= 0.3.1}
 BuildRequires:	ladspa-devel
 %{?with_lash:BuildRequires:	lash-devel >= 0.3}
-BuildRequires:	libgomp-devel
+# OpenMP 4.0
+BuildRequires:	libgomp-devel >= 6:4.9
 BuildRequires:	libsndfile-devel >= 1.0.18
 %{?with_midishare:BuildRequires:	midishare-devel}
 BuildRequires:	pkgconfig
@@ -67,6 +66,7 @@ Requires:	libsndfile-devel >= 1.0.18
 Requires:	portaudio-devel >= 19
 Requires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:Requires: readline-devel}
+Obsoletes:	fluidsynth-devel < 2
 
 %description devel
 This package contains the header files necessary to develop
@@ -82,12 +82,11 @@ kompilacji aplikacji korzystających z bibliotek FluidSynth.
 %build
 mkdir -p build
 cd build
-%cmake \
+%cmake .. \
 	-Denable-midishare=%{with midishare} \
 	-Denable-lash=%{with lash} \
 	-Denable-portaudio=%{with portaudio} \
-	-Denable-readline=%{with readline} \
-	..
+	-Denable-readline=%{with readline}
 
 # define missing in autotools suite
 echo '#define DEFAULT_SOUNDFONT "%{_datadir}/soundfonts/default.sf2"' >> src/config.h
