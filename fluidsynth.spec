@@ -4,12 +4,13 @@
 %bcond_with	midishare	# MidiShare support
 %bcond_without	portaudio	# portaudio support
 %bcond_without	readline	# readline line editing (GPL)
+%bcond_without	systemd		# systemd notify support
 #
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	2.0.6
-Release:	2
+Version:	2.1.1
+Release:	1
 %if %{with lash} || %{with readline}
 License:	GPL v2+ (enforced by lash/readline), LGPL v2+ (fluidsynth itself)
 %else
@@ -18,7 +19,7 @@ License:	LGPL v2+
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	7ffb3df1e9b6e71cb2cb15b4608cc8c9
+# Source0-md5:	165902909092c818a24517de6a4f2f83
 URL:		http://www.fluidsynth.org/
 BuildRequires:	alsa-lib-devel >= 0.9.1
 BuildRequires:	cmake >= 3.1.0
@@ -30,6 +31,7 @@ BuildRequires:	ladspa-devel
 %{?with_lash:BuildRequires:	lash-devel >= 0.3}
 # OpenMP 4.0
 BuildRequires:	libgomp-devel >= 6:4.9
+BuildRequires:	libinstpatch >= 1.1.0
 BuildRequires:	libsndfile-devel >= 1.0.18
 %{?with_midishare:BuildRequires:	midishare-devel}
 BuildRequires:	pkgconfig
@@ -37,6 +39,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:BuildRequires:	readline-devel}
 BuildRequires:	rpmbuild(macros) >= 1.213
+%{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
 Requires:	alsa-lib >= 0.9.1
 Requires:	glib2 >= 1:2.6.5
 Requires:	libsndfile >= 1.0.18
@@ -86,7 +89,8 @@ cd build
 	-Denable-midishare=%{with midishare} \
 	-Denable-lash=%{with lash} \
 	-Denable-portaudio=%{with portaudio} \
-	-Denable-readline=%{with readline}
+	-Denable-readline=%{with readline} \
+	%{!?with_systemd:-Denable-systemd=OFF}
 
 # define missing in autotools suite
 echo '#define DEFAULT_SOUNDFONT "%{_datadir}/soundfonts/default.sf2"' >> src/config.h
@@ -108,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README.md THANKS TODO
+%doc AUTHORS README.md THANKS TODO
 %attr(755,root,root) %{_bindir}/fluidsynth
 %attr(755,root,root) %{_libdir}/libfluidsynth.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.2
