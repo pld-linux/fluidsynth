@@ -66,7 +66,7 @@ Requires:	jack-audio-connection-kit-devel
 %{?with_lash:Requires:	lash-devel >= 0.3}
 Requires:	libsndfile-devel >= 1.0.18
 %{?with_midishare:Requires: midishare-devel}
-Requires:	portaudio-devel >= 19
+%{?with_portaudio:Requires:	portaudio-devel >= 19}
 Requires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:Requires: readline-devel}
 Obsoletes:	fluidsynth-devel < 2
