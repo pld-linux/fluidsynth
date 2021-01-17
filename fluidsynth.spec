@@ -1,4 +1,3 @@
-# TODO: OBOE support, BR: pkgconfig(oboe-1.0)
 #
 # Conditional build:
 %bcond_without	lash		# LASH support (GPL)
