@@ -70,7 +70,7 @@ Requires:	libsndfile-devel >= 1.0.18
 %{?with_portaudio:Requires:	portaudio-devel >= 19}
 Requires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:Requires: readline-devel}
-Obsoletes:	fluidsynth-devel < 2
+Obsoletes:	fluidsynth-static < 2
 
 %description devel
 This package contains the header files necessary to develop
