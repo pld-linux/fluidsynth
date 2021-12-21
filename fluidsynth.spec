@@ -20,7 +20,7 @@ Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	6d822ec9352398ccbc16994e56a37d02
-URL:		http://www.fluidsynth.org/
+URL:		https://www.fluidsynth.org/
 BuildRequires:	SDL2-devel >= 2
 BuildRequires:	alsa-lib-devel >= 0.9.1
 BuildRequires:	cmake >= 3.1.0
@@ -32,7 +32,7 @@ BuildRequires:	ladspa-devel
 %{?with_lash:BuildRequires:	lash-devel >= 0.3}
 # OpenMP 4.0
 BuildRequires:	libgomp-devel >= 6:4.9
-BuildRequires:	libinstpatch >= 1.1.0
+BuildRequires:	libinstpatch-devel >= 1.1.0
 BuildRequires:	libsndfile-devel >= 1.0.18
 %{?with_midishare:BuildRequires:	midishare-devel}
 BuildRequires:	pkgconfig
