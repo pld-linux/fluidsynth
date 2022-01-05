@@ -9,7 +9,7 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	2.1.9
+Version:	2.2.4
 Release:	1
 %if %{with lash} || %{with readline}
 License:	GPL v2+ (enforced by lash/readline), LGPL v2+ (fluidsynth itself)
@@ -19,14 +19,14 @@ License:	LGPL v2+
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	6d822ec9352398ccbc16994e56a37d02
+# Source0-md5:	ef180422258a1696a651f84f4de9a737
 URL:		https://www.fluidsynth.org/
 BuildRequires:	SDL2-devel >= 2
 BuildRequires:	alsa-lib-devel >= 0.9.1
-BuildRequires:	cmake >= 3.1.0
+BuildRequires:	cmake >= 3.12.0
 BuildRequires:	dbus-devel >= 1.0.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.6.5
+BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	ladspa-devel
 %{?with_lash:BuildRequires:	lash-devel >= 0.3}
@@ -42,7 +42,7 @@ BuildRequires:	pulseaudio-devel >= 0.9.8
 BuildRequires:	rpmbuild(macros) >= 1.213
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
 Requires:	alsa-lib >= 0.9.1
-Requires:	glib2 >= 1:2.6.5
+Requires:	glib2 >= 1:2.26.0
 Requires:	libsndfile >= 1.0.18
 Suggests:	soundfont-fluid
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -62,7 +62,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	alsa-lib-devel >= 0.9.1
 Requires:	dbus-devel >= 1.0.0
-Requires:	glib2-devel >= 1:2.6.5
+Requires:	glib2-devel >= 1:2.26.0
 Requires:	jack-audio-connection-kit-devel
 %{?with_lash:Requires:	lash-devel >= 0.3}
 Requires:	libsndfile-devel >= 1.0.18
@@ -116,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS README.md THANKS TODO
 %attr(755,root,root) %{_bindir}/fluidsynth
 %attr(755,root,root) %{_libdir}/libfluidsynth.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.2
+%attr(755,root,root) %ghost %{_libdir}/libfluidsynth.so.3
 %{_mandir}/man1/fluidsynth.1*
 
 %files devel
