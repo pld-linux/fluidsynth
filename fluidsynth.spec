@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	lash		# LASH support (GPL)
 %bcond_with	midishare	# MidiShare support
+%bcond_without	pipewire	# pipewire support
 %bcond_without	portaudio	# portaudio support
 %bcond_without	readline	# readline line editing (GPL)
 %bcond_without	systemd		# systemd notify support
@@ -9,7 +10,7 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	2.2.9
+Version:	2.3.1
 Release:	1
 %if %{with lash} || %{with readline}
 License:	GPL v2+ (enforced by lash/readline), LGPL v2+ (fluidsynth itself)
@@ -19,11 +20,11 @@ License:	LGPL v2+
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	3e9a8b13f7e3836264a03cd000c78473
+# Source0-md5:	7025da39fde375854bfb19ed38b7ee79
 URL:		https://www.fluidsynth.org/
 BuildRequires:	SDL2-devel >= 2
 BuildRequires:	alsa-lib-devel >= 0.9.1
-BuildRequires:	cmake >= 3.12.0
+BuildRequires:	cmake >= 3.13
 BuildRequires:	dbus-devel >= 1.0.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.26.0
@@ -36,6 +37,7 @@ BuildRequires:	libinstpatch-devel >= 1.1.0
 BuildRequires:	libsndfile-devel >= 1.0.18
 %{?with_midishare:BuildRequires:	midishare-devel}
 BuildRequires:	pkgconfig
+%{?with_pipewire:BuildRequires:	pipewire-devel >= 0.3}
 %{?with_portaudio:BuildRequires:	portaudio-devel >= 19}
 BuildRequires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:BuildRequires:	readline-devel}
@@ -67,6 +69,7 @@ Requires:	jack-audio-connection-kit-devel
 %{?with_lash:Requires:	lash-devel >= 0.3}
 Requires:	libsndfile-devel >= 1.0.18
 %{?with_midishare:Requires: midishare-devel}
+%{?with_pipewire:Requires:	pipewire-devel >= 0.3}
 %{?with_portaudio:Requires:	portaudio-devel >= 19}
 Requires:	pulseaudio-devel >= 0.9.8
 %{?with_readline:Requires: readline-devel}
@@ -84,25 +87,20 @@ kompilacji aplikacji korzystających z bibliotek FluidSynth.
 %setup -q
 
 %build
-mkdir -p build
-cd build
-%cmake .. \
+%cmake -B build \
 	-Denable-midishare=%{with midishare} \
 	-Denable-lash=%{with lash} \
+	%{!?with_pipewire:-Denable-pipewire=OFF} \
 	-Denable-portaudio=%{with portaudio} \
 	-Denable-readline=%{with readline} \
 	%{!?with_systemd:-Denable-systemd=OFF}
 
-# define missing in autotools suite
-echo '#define DEFAULT_SOUNDFONT "%{_datadir}/soundfonts/default.sf2"' >> src/config.h
-
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-cd build
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -125,3 +123,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/fluidsynth.h
 %{_includedir}/fluidsynth
 %{_pkgconfigdir}/fluidsynth.pc
+%{_libdir}/cmake/fluidsynth
