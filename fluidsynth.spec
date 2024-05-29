@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	lash		# LASH support (GPL)
+%bcond_without	lash		# LASH support (GPL; deprecated)
 %bcond_with	midishare	# MidiShare support
 %bcond_without	pipewire	# pipewire support
 %bcond_without	portaudio	# portaudio support
@@ -10,7 +10,7 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	2.3.4
+Version:	2.3.5
 Release:	1
 %if %{with lash} || %{with readline}
 License:	GPL v2+ (enforced by lash/readline), LGPL v2+ (fluidsynth itself)
@@ -20,7 +20,7 @@ License:	LGPL v2+
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	9e6f11b3a0b9981273e4d1fdadcd9533
+# Source0-md5:	1824982fb0ee0cb12bdcfa24388965b6
 URL:		https://www.fluidsynth.org/
 BuildRequires:	SDL2-devel >= 2
 BuildRequires:	alsa-lib-devel >= 0.9.1
