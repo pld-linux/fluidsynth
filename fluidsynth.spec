@@ -1,6 +1,5 @@
 #
 # Conditional build:
-%bcond_without	lash		# LASH support (GPL; deprecated)
 %bcond_with	midishare	# MidiShare support
 %bcond_without	pipewire	# pipewire support
 %bcond_without	portaudio	# portaudio support
@@ -10,19 +9,19 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	2.3.6
+Version:	2.4.4
 Release:	1
-%if %{with lash} || %{with readline}
-License:	GPL v2+ (enforced by lash/readline), LGPL v2+ (fluidsynth itself)
+%if %{with readline}
+License:	GPL v2+ (enforced by readline), LGPL v2+ (fluidsynth itself)
 %else
 License:	LGPL v2+
 %endif
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	ad6397be36caef45638a6a90600c8e7e
+# Source0-md5:	4c8389840fbcc7c3a3acab1519d9d20a
 URL:		https://www.fluidsynth.org/
-BuildRequires:	SDL2-devel >= 2
+BuildRequires:	SDL3-devel >= 3
 BuildRequires:	alsa-lib-devel >= 0.9.1
 BuildRequires:	cmake >= 3.13
 BuildRequires:	dbus-devel >= 1.0.0
@@ -30,7 +29,6 @@ BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	jack-audio-connection-kit-devel
 BuildRequires:	ladspa-devel
-%{?with_lash:BuildRequires:	lash-devel >= 0.3}
 # OpenMP 4.0
 BuildRequires:	libgomp-devel >= 6:4.9
 BuildRequires:	libinstpatch-devel >= 1.1.0
@@ -66,7 +64,6 @@ Requires:	alsa-lib-devel >= 0.9.1
 Requires:	dbus-devel >= 1.0.0
 Requires:	glib2-devel >= 1:2.26.0
 Requires:	jack-audio-connection-kit-devel
-%{?with_lash:Requires:	lash-devel >= 0.3}
 Requires:	libsndfile-devel >= 1.0.18
 %{?with_midishare:Requires: midishare-devel}
 %{?with_pipewire:Requires:	pipewire-devel >= 0.3}
@@ -89,7 +86,6 @@ kompilacji aplikacji korzystających z bibliotek FluidSynth.
 %build
 %cmake -B build \
 	-Denable-midishare=%{with midishare} \
-	-Denable-lash=%{with lash} \
 	%{!?with_pipewire:-Denable-pipewire=OFF} \
 	-Denable-portaudio=%{with portaudio} \
 	-Denable-readline=%{with readline} \
