@@ -9,7 +9,7 @@
 Summary:	FluidSynth - a software, real-time synthesizer
 Summary(pl.UTF-8):	FluidSynth - programowy syntezator działający w czasie rzeczywistym
 Name:		fluidsynth
-Version:	2.4.4
+Version:	2.4.7
 Release:	1
 %if %{with readline}
 License:	GPL v2+ (enforced by readline), LGPL v2+ (fluidsynth itself)
@@ -19,7 +19,7 @@ License:	LGPL v2+
 Group:		Applications/Sound
 #Source0Download: https://github.com/FluidSynth/fluidsynth/releases
 Source0:	https://github.com/FluidSynth/fluidsynth/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	4c8389840fbcc7c3a3acab1519d9d20a
+# Source0-md5:	e2102cb2c323e9fa7681c4a6223728cf
 URL:		https://www.fluidsynth.org/
 BuildRequires:	SDL3-devel >= 3
 BuildRequires:	alsa-lib-devel >= 0.9.1
